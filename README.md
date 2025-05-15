@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokedex - Next.js + Tailwind CSS + Zustand + TanStack Query + shadcn/ui
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Zustand](https://img.shields.io/badge/-Zustand-764ABC?style=for-the-badge)
+![TanStack Query](https://img.shields.io/badge/TanStack%20Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/-shadcn/ui-000000?style=for-the-badge)
 
-First, run the development server:
+This repository is a study project called **Pokedex**, built with modern web technologies to create an interactive Pokédex. The goal is to explore the integration of these tools in a real-world application, allowing users to search, view, and explore information about different Pokémon.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 About
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Pokedex** was created for educational purposes to study and implement:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js** (App Router) for the React framework
+- **Tailwind CSS** for utility-first styling
+- **Zustand** for global state management
+- **TanStack Query** for asynchronous data fetching and caching
+- **shadcn/ui** for accessible UI components
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The goal is to understand how these technologies work together in a Pokédex-inspired application.
 
-## Learn More
+## 🛠️ Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js](https://nextjs.org/) - The React Framework for Production
+- [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+- [Zustand](https://github.com/pmndrs/zustand) - A small, fast and scalable state management solution
+- [TanStack Query](https://tanstack.com/query/latest) - Powerful asynchronous state management and data fetching
+- [shadcn/ui](https://ui.shadcn.com/) - Beautifully designed components built with Radix UI and Tailwind CSS
+- [TypeScript](https://www.typescriptlang.org/) - Strongly typed JavaScript
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Modern Next.js application structure (App Router)
+- Responsive design with Tailwind CSS
+- Global state management with Zustand
+- Efficient asynchronous data fetching with TanStack Query
+- Reusable UI components with shadcn/ui
+- Type-safe development with TypeScript
 
-## Deploy on Vercel
+## 🚀 Getting Started
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Node.js (v18 or later recommended)
+- npm, yarn, or pnpm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ManoloPina/pokedex.git
+   ```
