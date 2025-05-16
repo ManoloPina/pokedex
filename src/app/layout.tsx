@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
 import { Montserrat } from 'next/font/google';
 import type { Metadata } from 'next';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Pokedex - Home Page',
@@ -46,7 +47,20 @@ export default function RootLayout({
                 world.
               </p>
             </div>
-
+            <Button
+              variant="secondary"
+              className="rounded-full text-blue-500 font-semibold text-sm hover:bg-secondary"
+            >
+              <div className="rounded-full bg-blue-200 p-0.5">
+                <Image
+                  src="/pokedex-bag.png"
+                  alt="Pokédex Bag"
+                  width={16}
+                  height={16}
+                />
+              </div>
+              Pokédex
+            </Button>
             <div
               style={{ backgroundImage: "url('/red-bg-pattern.png')" }}
               className="bg-center bg-no-repeat bg-contain w-full mx-auto flex-1"
