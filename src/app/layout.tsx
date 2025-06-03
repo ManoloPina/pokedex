@@ -1,6 +1,6 @@
 import './globals.css';
 import { twMerge } from 'tailwind-merge';
-import { Montserrat } from 'next/font/google';
+import { Montserrat, Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import Providers from '@/context/QueryClientProvider';
 
@@ -15,6 +15,10 @@ export const metadata: Metadata = {
 };
 
 const montserrat = Montserrat({
+  subsets: ['latin'],
+});
+
+const inter = Inter({
   subsets: ['latin'],
 });
 
@@ -43,10 +47,10 @@ export default function RootLayout({
                 />
               </div>
               <div className="absolute bottom-1/2">
-                <h2 className="text-white font-bold text-[6.4rem]">
+                <h2 className="text-white font-bold text-[48px] text-center md:text-[6.4rem] ">
                   Who&apos;s that Pokémon?
                 </h2>
-                <p className="text-lg font-medium text-white text-center">
+                <p className="text-base p-5 md:text-lg font-medium text-white text-center">
                   The perfect guide for those who want to hunt Pokémon around
                   the world.
                 </p>
@@ -70,7 +74,7 @@ export default function RootLayout({
                 className="bg-center bg-no-repeat bg-contain w-full mx-auto flex-1"
               />
               <Image
-                className="absolute -bottom-[248px]"
+                className="absolute -bottom-4 md:-bottom-[248px]"
                 src="/red-pokeball.png"
                 alt="Red Pokeball"
                 width={800}
@@ -79,9 +83,14 @@ export default function RootLayout({
             </div>
           </header>
           <SearchBar />
-          <div className="grid grid-cols-[1fr_2fr] max-w-7xl mx-auto items-start justify-start">
-            <Sidebar className=" border border-green-500" list={[]} />
-            <div className="border border-pink-600 ">{children}</div>
+          <div
+            className={twMerge(
+              inter.className,
+              'grid grid-cols-1 md:grid-cols-[240px_2fr] max-w-7xl gap-10 mx-auto items-start justify-start pt-10 border border-red-500'
+            )}
+          >
+            <Sidebar className="hidden md:flex" />
+            <div className="border border-green-500">{children}</div>
           </div>
         </body>
       </Providers>

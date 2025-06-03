@@ -15,11 +15,11 @@ export default function SearchBar({ className = '' }: Readonly<IProps>) {
   return (
     <div
       className={twMerge(
-        'h-[300px] bg-gradient-to-tr from-[#eff3f6]/100 to-[#eff3f6]/10 flex items-center',
+        'h-[300px] bg-gradient-to-tr from-[#eff3f6]/100 to-[#eff3f6]/10 flex flex-col md:flex-row items-center',
         className
       )}
     >
-      <div className="max-w-7xl mx-auto w-full flex flex-row items-center justify-between">
+      <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center justify-between">
         <p className="font-bold text-primary text-3xl max-w-[260px]">
           Selecione o seu Pokémon
         </p>
