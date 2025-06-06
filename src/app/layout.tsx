@@ -2,7 +2,7 @@ import './globals.css';
 import { twMerge } from 'tailwind-merge';
 import { Montserrat, Inter } from 'next/font/google';
 import type { Metadata } from 'next';
-import Providers from '@/context/QueryClientProvider';
+import { TRPCProvider } from '@/trpc/client';
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
+      <TRPCProvider>
         <body className={`antialiased`}>
           <header
             className={twMerge(
@@ -90,10 +90,10 @@ export default function RootLayout({
             )}
           >
             <Sidebar className="hidden md:flex" />
-            <div className="border border-green-500">{children}</div>
+            <div>{children}</div>
           </div>
         </body>
-      </Providers>
+      </TRPCProvider>
     </html>
   );
 }

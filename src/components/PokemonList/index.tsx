@@ -1,16 +1,19 @@
 'use client';
-import { QUERIES } from '@/lib/constants';
-import { PokemonService } from '@/services/pokemonService';
-import { useQuery } from '@tanstack/react-query';
+
+import { trpc } from '@/trpc/client';
+import PokemonCard from '../PokemonCard';
+
 export default function PokemonList() {
-  const { data: pokemons, isLoading } = useQuery({
-    queryKey: [QUERIES.POKEMON],
-    queryFn: () => PokemonService.getAllPokemons(),
-  });
+  const {
+    data: pokemons,
+    isLoading,
+    isFetching,
+  } = trpc.fetchPokemons.useQuery();
+
   return (
-    <ul>
-      {pokemons?.results.map((pokemon) => (
-        <li>{pokemon.name}</li>
+    <ul className="grid grid-cols-3 gap-8">
+      {pokemons?.map((pokemon) => (
+        <PokemonCard key={pokemon.id} {...pokemon} />
       ))}
     </ul>
   );
