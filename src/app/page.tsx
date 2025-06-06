@@ -1,23 +1,15 @@
-import { QUERIES } from '@/lib/constants';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-
-import { PokemonService } from '@/services/pokemonService';
+import { HydrateClient, trpc } from '@/trpc/server';
 import PokemonList from '@/components/PokemonList';
 
 export default async function Home() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: [QUERIES.POKEMON],
-    queryFn: () => PokemonService.getAllPokemons(),
-  });
+  const { greeting } = await trpc.hello({ text: 'fellow kids' });
+
+  await trpc.fetchPokemons.prefetch();
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <HydrateClient>
+      <h2>{greeting}</h2>
       <PokemonList />
-    </HydrationBoundary>
+    </HydrateClient>
   );
 }

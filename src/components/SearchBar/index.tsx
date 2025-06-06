@@ -25,7 +25,7 @@ export default function SearchBar({ className = '' }: Readonly<IProps>) {
         </p>
         <div className="w-1/3">
           <Input
-            className="z-10 rounded-full text-sm placeholder:text-[#A0AFBA] border-none shadow-none bg-white w-full !px-6 !py-4 h-[56px]"
+            className="z-10 rounded-full text-sm placeholder:text-[#A0AFBA]  shadow-none bg-white w-full !px-6 !py-4 h-[56px]"
             onChange={(e) => setSearchText(e.target.value)}
             value={searchText}
             placeholder="Pesquise pelo nome ou código"
