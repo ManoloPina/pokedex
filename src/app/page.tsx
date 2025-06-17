@@ -2,13 +2,12 @@ import { HydrateClient, trpc } from '@/trpc/server';
 import PokemonList from '@/components/PokemonList';
 
 export default async function Home() {
-  const { greeting } = await trpc.hello({ text: 'fellow kids' });
-
-  await trpc.fetchPokemons.prefetch();
+  await trpc.fetchPokemons.prefetchInfinite({
+    limit: 9,
+  });
 
   return (
     <HydrateClient>
-      <h2>{greeting}</h2>
       <PokemonList />
     </HydrateClient>
   );

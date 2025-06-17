@@ -86,12 +86,13 @@ export default function RootLayout({
           <div
             className={twMerge(
               inter.className,
-              'grid grid-cols-1 md:grid-cols-[240px_2fr] max-w-7xl gap-10 mx-auto items-start justify-start pt-10 border border-red-500'
+              'grid grid-cols-1 md:grid-cols-[240px_2fr] max-w-7xl gap-10 mx-auto items-start justify-start pt-10'
             )}
           >
             <Sidebar className="hidden md:flex" />
             <div>{children}</div>
           </div>
+          <footer className="min-h-[200px]" />
         </body>
       </TRPCProvider>
     </html>
