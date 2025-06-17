@@ -1,7 +1,8 @@
-import { z } from 'zod';
 import { baseProcedure, createTRPCRouter } from '../init';
 import { PokemonService } from '@/services/pokemonService';
 import http from '@/lib/http';
+import { IPokemon } from '@/model/Pokemon';
+import { z } from 'zod';
 export const appRouter = createTRPCRouter({
   hello: baseProcedure
     .input(
@@ -14,21 +15,76 @@ export const appRouter = createTRPCRouter({
         greeting: `hello ${opts.input.text}`,
       };
     }),
-  fetchPokemons: baseProcedure.query(async () => {
-    const pokemonListRes = await PokemonService.getAllPokemons();
-    if (pokemonListRes) {
-      const pokemonDetails = await Promise.all(
-        pokemonListRes.results.map(async (pokemon) => {
-          const detailRes = await http.get(pokemon.url);
+  fetchPokemons: baseProcedure
+    .input(
+      z.object({
+        limit: z.number().default(20),
+        cursor: z.number().default(0),
+        type: z.string().optional(),
+      })
+    )
+    .query(async ({ input }) => {
+      const { limit, cursor, type } = input;
+      let pokemonList: { name: string; url: string }[] = [];
+
+      if (type) {
+        const pokemonsTypesRes = await PokemonService.getAllPokemonsByType(
+          type
+        );
+
+        if (!pokemonsTypesRes) {
           return {
-            ...detailRes.data,
+            pokemons: [],
+            nextCursor: null,
+          };
+        }
+
+        pokemonList = pokemonsTypesRes.pokemon
+          .slice(cursor, cursor + limit)
+          .map((p) => ({
+            name: p.pokemon.name,
+            url: p.pokemon.url,
+          }));
+      } else {
+        const pokemonListRes = await PokemonService.getAllPokemons(
+          limit,
+          cursor
+        );
+        if (!pokemonListRes) {
+          return {
+            pokemons: [],
+            nextCursor: null,
+          };
+        }
+
+        pokemonList = pokemonListRes.results.map((pokemon) => ({
+          name: pokemon.name,
+          url: pokemon.url,
+        }));
+      }
+
+      const pokemonDetails: Pick<
+        IPokemon,
+        'types' | 'name' | 'id' | 'sprites'
+      >[] = await Promise.all(
+        pokemonList.map(async (pokemon) => {
+          const {
+            data: { types, name, id, sprites },
+          } = await http.get<IPokemon>(pokemon.url);
+          return {
+            id,
+            name,
+            sprites,
+            types,
           };
         })
       );
-      return pokemonDetails;
-    }
-    return [];
-  }),
+
+      return {
+        pokemons: pokemonDetails,
+        nextCursor: pokemonList.length === limit ? cursor + limit : null,
+      };
+    }),
 });
-// export type definition of API
+
 export type AppRouter = typeof appRouter;
