@@ -16,16 +16,26 @@ export const PokemonService = {
   },
   async getAllPokemons(
     limit: number,
-    offset: number
+    offset: number,
+    query?: string
   ): Promise<PokemonType | null> {
+    console.log('query query params', query);
     try {
-      const res = await http.get(`/pokemon?limit=${limit}&offset=${offset}`);
-      if (res.status === 200) {
-        return res.data;
+      if (query) {
+        const res = await http.get(`pokemon/${query}`);
+        if (res.status === 200) {
+          return res.data;
+        }
+        return null;
+      } else {
+        const res = await http.get(`pokemon?limit=${limit}&offset=${offset}`);
+        if (res.status === 200) {
+          return res.data;
+        }
+        return null;
       }
-      return null;
     } catch (err: unknown) {
-      console.log(err, 'err');
+      console.error(err);
       return null;
     }
   },

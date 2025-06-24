@@ -21,10 +21,12 @@ export const appRouter = createTRPCRouter({
         limit: z.number().default(20),
         cursor: z.number().default(0),
         type: z.string().optional(),
+        query: z.string().optional(),
       })
     )
     .query(async ({ input }) => {
-      const { limit, cursor, type } = input;
+      const { limit, cursor, type, query } = input;
+      console.log('trpc query:', query);
       let pokemonList: { name: string; url: string }[] = [];
 
       if (type) {
@@ -45,6 +47,32 @@ export const appRouter = createTRPCRouter({
             name: p.pokemon.name,
             url: p.pokemon.url,
           }));
+      } else if (query) {
+        console.log('passou aqui na query:');
+        const pokemon = (await PokemonService.getAllPokemons(
+          0,
+          0,
+          query
+        )) as IPokemon | null;
+        if (!pokemon) {
+          return {
+            pokemons: [],
+            nextCursor: null,
+          };
+        }
+
+        // Adiciona o Pokémon retornado à lista
+        return {
+          pokemons: [
+            {
+              id: pokemon.id,
+              name: pokemon.name,
+              sprites: pokemon.sprites,
+              types: pokemon.types,
+            },
+          ],
+          nextCursor: null,
+        };
       } else {
         const pokemonListRes = await PokemonService.getAllPokemons(
           limit,
