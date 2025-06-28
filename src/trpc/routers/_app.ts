@@ -21,11 +21,13 @@ export const appRouter = createTRPCRouter({
         limit: z.number().default(20),
         cursor: z.number().default(0),
         type: z.string().optional(),
+        query: z.string().optional(),
       })
     )
     .query(async ({ input }) => {
-      const { limit, cursor, type } = input;
+      const { limit, cursor, type, query } = input;
       let pokemonList: { name: string; url: string }[] = [];
+      let count = 0;
 
       if (type) {
         const pokemonsTypesRes = await PokemonService.getAllPokemonsByType(
@@ -36,8 +38,11 @@ export const appRouter = createTRPCRouter({
           return {
             pokemons: [],
             nextCursor: null,
+            count: 0,
           };
         }
+
+        count = pokemonsTypesRes.pokemon.length;
 
         pokemonList = pokemonsTypesRes.pokemon
           .slice(cursor, cursor + limit)
@@ -45,6 +50,32 @@ export const appRouter = createTRPCRouter({
             name: p.pokemon.name,
             url: p.pokemon.url,
           }));
+      } else if (query) {
+        const pokemon = (await PokemonService.getAllPokemons(
+          0,
+          0,
+          query
+        )) as IPokemon | null;
+        if (!pokemon) {
+          return {
+            pokemons: [],
+            nextCursor: null,
+            count: 0,
+          };
+        }
+
+        return {
+          pokemons: [
+            {
+              id: pokemon.id,
+              name: pokemon.name,
+              sprites: pokemon.sprites,
+              types: pokemon.types,
+            },
+          ],
+          nextCursor: null,
+          count: 1,
+        };
       } else {
         const pokemonListRes = await PokemonService.getAllPokemons(
           limit,
@@ -54,8 +85,11 @@ export const appRouter = createTRPCRouter({
           return {
             pokemons: [],
             nextCursor: null,
+            count: 0,
           };
         }
+
+        count = pokemonListRes.count;
 
         pokemonList = pokemonListRes.results.map((pokemon) => ({
           name: pokemon.name,
@@ -83,6 +117,7 @@ export const appRouter = createTRPCRouter({
       return {
         pokemons: pokemonDetails,
         nextCursor: pokemonList.length === limit ? cursor + limit : null,
+        count,
       };
     }),
 });
