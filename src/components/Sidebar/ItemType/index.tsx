@@ -12,10 +12,10 @@ type Props = IType;
 export default function ItemType({ name, url }: Readonly<Props>) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { setType } = usePokemonStore((state) => state);
+  const { setType, type } = usePokemonStore((state) => state);
 
   const selectedType = searchParams.get('type');
-  const isActive = selectedType === name;
+  const isActive = selectedType === name || type === name;
 
   const iconName = `${name.charAt(0).toUpperCase()}${name.slice(1)}Type`;
   const IconComponent = Icons[iconName as keyof typeof Icons];

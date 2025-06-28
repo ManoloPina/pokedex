@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { trpc } from '@/trpc/client';
 import { cn } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';
@@ -8,6 +8,7 @@ import { usePokemonStore } from '@/providers/pokemon-store-provider';
 import PokemonCard from '@/components/PokemonCard';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PokeBall } from '@/assets/icons';
 
 export default function PokemonList() {
   const { type } = usePokemonStore((state) => state);
@@ -44,7 +45,13 @@ export default function PokemonList() {
     );
 
   return (
-    <div className=" flex flex-col items-center">
+    <div className="flex flex-col items-center gap-10">
+      <div className="flex flex-row justify-start items-center w-full px-12 gap-4">
+        <PokeBall className="size-5 text-[#F33C3C] fill-current/8" />
+        <p className="font-semibold text-lg text-[#4D5053]">
+          {data?.pages[0].count} Pokémons
+        </p>
+      </div>
       <ul
         className={cn(
           'grid grid-cols-1 md:grid-cols-3 gap-8',

@@ -26,8 +26,8 @@ export const appRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const { limit, cursor, type, query } = input;
-      console.log('trpc query:', query);
       let pokemonList: { name: string; url: string }[] = [];
+      let count = 0;
 
       if (type) {
         const pokemonsTypesRes = await PokemonService.getAllPokemonsByType(
@@ -38,8 +38,11 @@ export const appRouter = createTRPCRouter({
           return {
             pokemons: [],
             nextCursor: null,
+            count: 0,
           };
         }
+
+        count = pokemonsTypesRes.pokemon.length;
 
         pokemonList = pokemonsTypesRes.pokemon
           .slice(cursor, cursor + limit)
@@ -48,7 +51,6 @@ export const appRouter = createTRPCRouter({
             url: p.pokemon.url,
           }));
       } else if (query) {
-        console.log('passou aqui na query:');
         const pokemon = (await PokemonService.getAllPokemons(
           0,
           0,
@@ -58,10 +60,10 @@ export const appRouter = createTRPCRouter({
           return {
             pokemons: [],
             nextCursor: null,
+            count: 0,
           };
         }
 
-        // Adiciona o Pokémon retornado à lista
         return {
           pokemons: [
             {
@@ -72,6 +74,7 @@ export const appRouter = createTRPCRouter({
             },
           ],
           nextCursor: null,
+          count: 1,
         };
       } else {
         const pokemonListRes = await PokemonService.getAllPokemons(
@@ -82,8 +85,11 @@ export const appRouter = createTRPCRouter({
           return {
             pokemons: [],
             nextCursor: null,
+            count: 0,
           };
         }
+
+        count = pokemonListRes.count;
 
         pokemonList = pokemonListRes.results.map((pokemon) => ({
           name: pokemon.name,
@@ -111,6 +117,7 @@ export const appRouter = createTRPCRouter({
       return {
         pokemons: pokemonDetails,
         nextCursor: pokemonList.length === limit ? cursor + limit : null,
+        count,
       };
     }),
 });
