@@ -9,6 +9,7 @@ import PokemonCard from '@/components/PokemonCard';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PokeBall } from '@/assets/icons';
+import PokemonDetails from '../PokemonDetails';
 
 export default function PokemonList() {
   const { type } = usePokemonStore((state) => state);
@@ -62,7 +63,9 @@ export default function PokemonList() {
         {data?.pages.map((page, pageIndex) =>
           page?.pokemons.length > 0 ? (
             page?.pokemons.map((pokemon) => (
-              <PokemonCard key={pokemon.id} {...pokemon} />
+              <PokemonDetails key={pokemon.id}>
+                <PokemonCard {...pokemon} />
+              </PokemonDetails>
             ))
           ) : (
             <div
