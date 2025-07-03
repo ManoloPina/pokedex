@@ -4,7 +4,7 @@ import { PokemonType } from '@/model/Pokemon/Types';
 export const PokemonService = {
   async getPokemonTypes(): Promise<PokemonType | null> {
     try {
-      const res = await http.get(`/type`);
+      const res = await http.get(`type`);
       if (res.status === 200) {
         return res.data;
       }
