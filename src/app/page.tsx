@@ -1,5 +1,6 @@
 import { HydrateClient, trpc } from '@/trpc/server';
 import PokemonList from '@/components/PokemonList';
+import { Suspense } from 'react';
 
 export default async function Home() {
   await trpc.fetchPokemons.prefetchInfinite({
@@ -8,7 +9,9 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <PokemonList />
+      <Suspense>
+        <PokemonList />
+      </Suspense>
     </HydrateClient>
   );
 }

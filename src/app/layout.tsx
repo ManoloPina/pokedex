@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import Sidebar from '@/components/Sidebar';
 import SearchBar from '@/components/SearchBar';
 import { cn } from '@/lib/utils';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Pokedex - Home Page',
@@ -89,14 +90,18 @@ export default function RootLayout({
                 />
               </div>
             </header>
-            <SearchBar />
+            <Suspense>
+              <SearchBar />
+            </Suspense>
             <div
               className={twMerge(
                 inter.className,
                 'grid grid-cols-1 md:grid-cols-[240px_2fr] max-w-7xl gap-10 mx-auto items-start justify-start pt-10'
               )}
             >
-              <Sidebar className="hidden md:flex" />
+              <Suspense>
+                <Sidebar className="hidden md:flex" />
+              </Suspense>
               <div>{children}</div>
             </div>
             <footer className="min-h-[200px]" />

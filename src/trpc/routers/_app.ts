@@ -63,7 +63,7 @@ export const appRouter = createTRPCRouter({
             count: 0,
           };
         }
-        const weaknesses = PokemonService.getWeaknesses(pokemon.types);
+        const weaknesses = await PokemonService.getWeaknesses(pokemon.types);
         return {
           pokemons: [
             {
