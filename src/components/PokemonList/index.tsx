@@ -63,7 +63,7 @@ export default function PokemonList() {
         {data?.pages.map((page, pageIndex) =>
           page?.pokemons.length > 0 ? (
             page?.pokemons.map((pokemon) => (
-              <PokemonDetails key={pokemon.id}>
+              <PokemonDetails key={pokemon.id} pokemon={pokemon}>
                 <PokemonCard {...pokemon} />
               </PokemonDetails>
             ))

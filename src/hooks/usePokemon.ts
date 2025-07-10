@@ -19,5 +19,6 @@ export const usePokemon = () => {
     fairy: '#EE99AC',
     normal: '#A890F0',
   };
+
   return { typeColors };
 };

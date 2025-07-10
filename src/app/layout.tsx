@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Sidebar from '@/components/Sidebar';
 import SearchBar from '@/components/SearchBar';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Pokedex - Home Page',
@@ -17,10 +18,12 @@ export const metadata: Metadata = {
 
 const montserrat = Montserrat({
   subsets: ['latin'],
+  variable: '--font-montserrat',
 });
 
 const inter = Inter({
   subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 export default function RootLayout({
@@ -32,7 +35,9 @@ export default function RootLayout({
     <html lang="en">
       <PokemonStoreProvider>
         <TRPCProvider>
-          <body className={`antialiased`}>
+          <body
+            className={cn('antialiased', montserrat.variable, inter.variable)}
+          >
             <header
               className={twMerge(
                 montserrat.className,
