@@ -1,4 +1,5 @@
 import http from '@/lib/http';
+import { ITypeSlot } from '@/model/Pokemon';
 import { PokemonType } from '@/model/Pokemon/Types';
 
 export const PokemonService = {
@@ -19,7 +20,6 @@ export const PokemonService = {
     offset: number,
     query?: string
   ): Promise<PokemonType | null> {
-    console.log('query query params', query);
     try {
       if (query) {
         const res = await http.get(`pokemon/${query}`);
@@ -52,5 +52,21 @@ export const PokemonService = {
       console.log(err, err);
       return null;
     }
+  },
+  async getWeaknesses(types: ITypeSlot[]): Promise<string[]> {
+    const weaknessesSet = new Set<string>();
+    await Promise.all(
+      types.map(async (t) => {
+        const res = await http.get(`type/${t.type.name}`);
+        if (res.status === 200) {
+          res.data.damage_relations.double_damage_from.forEach(
+            (weak: { name: string }) => {
+              weaknessesSet.add(weak.name);
+            }
+          );
+        }
+      })
+    );
+    return Array.from(weaknessesSet);
   },
 };

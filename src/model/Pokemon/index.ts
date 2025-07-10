@@ -119,3 +119,16 @@ export interface ITypeSlot {
 
 // Adicione a interface IType se necessário, pois estava referenciada mas não definida
 export type IType = object;
+
+export type PokemonSummary = Pick<
+  IPokemon,
+  | 'id'
+  | 'name'
+  | 'sprites'
+  | 'types'
+  | 'abilities'
+  | 'height'
+  | 'weight'
+  | 'base_experience'
+  | 'stats'
+> & { weaknesses: string[] };

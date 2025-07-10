@@ -1,7 +1,7 @@
 import { baseProcedure, createTRPCRouter } from '../init';
 import { PokemonService } from '@/services/pokemonService';
 import http from '@/lib/http';
-import { IPokemon } from '@/model/Pokemon';
+import { IPokemon, PokemonSummary } from '@/model/Pokemon';
 import { z } from 'zod';
 export const appRouter = createTRPCRouter({
   hello: baseProcedure
@@ -63,7 +63,7 @@ export const appRouter = createTRPCRouter({
             count: 0,
           };
         }
-
+        const weaknesses = await PokemonService.getWeaknesses(pokemon.types);
         return {
           pokemons: [
             {
@@ -71,6 +71,12 @@ export const appRouter = createTRPCRouter({
               name: pokemon.name,
               sprites: pokemon.sprites,
               types: pokemon.types,
+              abilities: pokemon.abilities,
+              base_experience: pokemon.base_experience,
+              height: pokemon.height,
+              weight: pokemon.weight,
+              weaknesses,
+              stats: pokemon.stats,
             },
           ],
           nextCursor: null,
@@ -97,19 +103,35 @@ export const appRouter = createTRPCRouter({
         }));
       }
 
-      const pokemonDetails: Pick<
-        IPokemon,
-        'types' | 'name' | 'id' | 'sprites'
-      >[] = await Promise.all(
+      const pokemonDetails: PokemonSummary[] = await Promise.all(
         pokemonList.map(async (pokemon) => {
           const {
-            data: { types, name, id, sprites },
+            data: {
+              types,
+              name,
+              id,
+              sprites,
+              abilities,
+              height,
+              weight,
+              base_experience,
+              stats,
+            },
           } = await http.get<IPokemon>(pokemon.url);
+
+          const weaknesses = await PokemonService.getWeaknesses(types);
+
           return {
             id,
             name,
             sprites,
             types,
+            abilities,
+            height,
+            weight,
+            base_experience,
+            weaknesses,
+            stats,
           };
         })
       );
