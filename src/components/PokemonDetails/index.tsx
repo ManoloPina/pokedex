@@ -34,7 +34,9 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
       IconComponent && (
         <IconComponent
           className="size-6 text-[#ACB9C1]"
-          style={{ color: typeColors[name] }}
+          style={{
+            color: typeColors[name],
+          }}
         />
       )
     );
@@ -44,30 +46,22 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent
-        className="max-w-[680px] min-w-[680px]  border-none rounded-2xl"
+        className="max-w-[680px] w-full md:min-w-[680px] rounded-2xl
+          border-none"
         showCloseButton={false}
       >
         <DialogClose
-          className="
-      absolute
-      -top-11
-      right-0
-      cursor-pointer
-      z-50
-      bg-white
-      w-9 h-9
-      flex items-center justify-center
-      hover:bg-gray-100
-      transition
-      rounded-md
-    "
+          className="absolute -top-11 right-0 z-50 flex h-9 w-9 cursor-pointer
+            items-center justify-center rounded-md bg-white transition
+            hover:bg-gray-100"
           aria-label="Fechar"
         >
           <X size={18} className="text-[#4D5053]" />
         </DialogClose>
-        <div className="h-full  overflow-hidden rounded-2xl">
+        <div className="h-full overflow-hidden rounded-2xl">
           <div
-            className="absolute top-0 left-0 bottom-0 w-full max-w-[191px] z-0 bg-cover bg-no-repeat bg-left h-full"
+            className="absolute top-0 md:bottom-0 left-0 z-0 md:h-full w-full
+              max-w-[191px] bg-cover bg-left bg-no-repeat h-[44px]"
             style={{
               backgroundImage: `url('/dialog-details-bg/${pokemon.types[0].type.name}-bg.png')`,
             }}
@@ -75,9 +69,12 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
           <VisuallyHidden>
             <DialogTitle>{pokemon.name}</DialogTitle>
           </VisuallyHidden>
-          <div className="grid grid-cols-[248px_1fr] gap-4">
-            <div className="relative flex flex-col justify-evenly items-center gap-8">
-              <div className="rounded-full gap-2 bg-white w-fit">{icon}</div>
+          <div className="grid grid-cols-1 md:grid-cols-[248px_1fr] gap-4">
+            <div
+              className="relative flex flex-col items-center justify-evenly
+                gap-8"
+            >
+              <div className="w-fit gap-2 rounded-full bg-white">{icon}</div>
               <Image
                 alt={pokemon.name}
                 src={
@@ -90,13 +87,16 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
             </div>
             <div className="flex flex-col gap-8">
               <div className="flex flex-col gap-1">
-                <h2 className="capitalize font-montserrat font-bold text-2xl">
+                <h2 className="font-montserrat text-2xl font-bold capitalize">
                   {pokemon.name}{' '}
-                  <span className="font-medium text-base text-[#7A7D80]">
+                  <span className="text-base font-medium text-[#7A7D80]">
                     #{pokemon.id.toString().padStart(3, '0')}
                   </span>
                 </h2>
-                <div className="flex flex-row gap-2 font-montserrat font-semibold capitalize">
+                <div
+                  className="font-montserrat flex flex-row gap-2 font-semibold
+                    capitalize"
+                >
                   {pokemon.types.map((type) => (
                     <BadgeType key={type.type.name} {...type} />
                   ))}
@@ -105,35 +105,45 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex flex-col gap-1">
-                  <span className="font-inter font-normal text-[#7A7D80] text-sm">
+                  <span
+                    className="font-inter text-sm font-normal text-[#7A7D80]"
+                  >
                     Height
                   </span>
-                  <span className="font-montserrat font-semibold text-sm">
+                  <span className="font-montserrat text-sm font-semibold">
                     {(pokemon.height / 10).toFixed(2)}m
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="font-inter font-normal text-[#7A7D80] text-sm">
+                  <span
+                    className="font-inter text-sm font-normal text-[#7A7D80]"
+                  >
                     Weight
                   </span>
-                  <span className="font-montserrat font-semibold text-sm">
-                    {pokemon.weight}kg
+                  <span className="font-montserrat text-sm font-semibold">
+                    {pokemon.weight}
+                    kg
                   </span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="font-inter font-normal text-[#7A7D80]">
                     Abilities
                   </span>
-                  <span className="font-montserrat font-semibold text-sm capitalize">
+                  <span
+                    className="font-montserrat text-sm font-semibold capitalize"
+                  >
                     {pokemon.abilities[0].ability.name}
                   </span>
                 </div>
               </div>
-              <div className=" flex flex-col gap-4 ">
-                <h3 className="text font-inter font-semibold text-sm text-[#4D5053]">
+              <div className="flex flex-col gap-4">
+                <h3
+                  className="text font-inter text-sm font-semibold
+                    text-[#4D5053]"
+                >
                   Weakness
                 </h3>
-                <div className="flex flex-row gap-2 flex-wrap">
+                <div className="flex flex-row flex-wrap gap-2">
                   {pokemon.weaknesses.map((weaknesses, i) => (
                     <BadgeType
                       key={weaknesses}
