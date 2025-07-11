@@ -10,12 +10,14 @@ import {
   DialogTrigger,
   DialogContent,
   DialogTitle,
+  DialogClose,
 } from '@/components/ui/dialog';
 import * as Icons from '@/assets/icons';
 import BadgeType from '../BadgeType';
 
 import { PokemonSummary } from '@/model/Pokemon';
 import Stats from './Stats';
+import { X } from 'lucide-react';
 
 interface Props {
   children: React.ReactNode;
@@ -41,88 +43,111 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
   return (
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent className="max-w-[680px] min-w-[680px] max-h-[500px] overflow-hidden border-none">
-        <div
-          className="absolute top-0 left-0 bottom-0 w-full max-w-[191px] z-0 bg-cover bg-no-repeat bg-left h-full"
-          style={{
-            backgroundImage: `url('/dialog-details-bg/${pokemon.types[0].type.name}-bg.png')`,
-          }}
-        />
-        <VisuallyHidden>
-          <DialogTitle>{pokemon.name}</DialogTitle>
-        </VisuallyHidden>
-        <div className="grid grid-cols-[248px_1fr] gap-4">
-          <div className="relative flex flex-col justify-evenly items-center gap-8">
-            <div className="rounded-full gap-2 bg-white w-fit">{icon}</div>
-            <Image
-              alt={pokemon.name}
-              src={
-                pokemon.sprites.other.dream_world.front_default ??
-                pokemon.sprites.other['official-artwork'].front_default
-              }
-              width={232}
-              height={232}
-            />
-          </div>
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-1">
-              <h2 className="capitalize font-montserrat font-bold text-2xl">
-                {pokemon.name}{' '}
-                <span className="font-medium text-base text-[#7A7D80]">
-                  #{pokemon.id.toString().padStart(3, '0')}
-                </span>
-              </h2>
-              <div className="flex flex-row gap-2 font-montserrat font-semibold capitalize">
-                {pokemon.types.map((type) => (
-                  <BadgeType key={type.type.name} {...type} />
-                ))}
-              </div>
+      <DialogContent
+        className="max-w-[680px] min-w-[680px]  border-none rounded-2xl"
+        showCloseButton={false}
+      >
+        <DialogClose
+          className="
+      absolute
+      -top-11
+      right-0
+      cursor-pointer
+      z-50
+      bg-white
+      w-9 h-9
+      flex items-center justify-center
+      hover:bg-gray-100
+      transition
+      rounded-md
+    "
+          aria-label="Fechar"
+        >
+          <X size={18} className="text-[#4D5053]" />
+        </DialogClose>
+        <div className="h-full  overflow-hidden rounded-2xl">
+          <div
+            className="absolute top-0 left-0 bottom-0 w-full max-w-[191px] z-0 bg-cover bg-no-repeat bg-left h-full"
+            style={{
+              backgroundImage: `url('/dialog-details-bg/${pokemon.types[0].type.name}-bg.png')`,
+            }}
+          />
+          <VisuallyHidden>
+            <DialogTitle>{pokemon.name}</DialogTitle>
+          </VisuallyHidden>
+          <div className="grid grid-cols-[248px_1fr] gap-4">
+            <div className="relative flex flex-col justify-evenly items-center gap-8">
+              <div className="rounded-full gap-2 bg-white w-fit">{icon}</div>
+              <Image
+                alt={pokemon.name}
+                src={
+                  pokemon.sprites.other.dream_world.front_default ??
+                  pokemon.sprites.other['official-artwork'].front_default
+                }
+                width={232}
+                height={232}
+              />
             </div>
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-1">
+                <h2 className="capitalize font-montserrat font-bold text-2xl">
+                  {pokemon.name}{' '}
+                  <span className="font-medium text-base text-[#7A7D80]">
+                    #{pokemon.id.toString().padStart(3, '0')}
+                  </span>
+                </h2>
+                <div className="flex flex-row gap-2 font-montserrat font-semibold capitalize">
+                  {pokemon.types.map((type) => (
+                    <BadgeType key={type.type.name} {...type} />
+                  ))}
+                </div>
+              </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex flex-col gap-1">
-                <span className="font-inter font-normal text-[#7A7D80] text-sm">
-                  Height
-                </span>
-                <span className="font-montserrat font-semibold text-sm">
-                  {(pokemon.height / 10).toFixed(2)}m
-                </span>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-col gap-1">
+                  <span className="font-inter font-normal text-[#7A7D80] text-sm">
+                    Height
+                  </span>
+                  <span className="font-montserrat font-semibold text-sm">
+                    {(pokemon.height / 10).toFixed(2)}m
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-inter font-normal text-[#7A7D80] text-sm">
+                    Weight
+                  </span>
+                  <span className="font-montserrat font-semibold text-sm">
+                    {pokemon.weight}kg
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-inter font-normal text-[#7A7D80]">
+                    Abilities
+                  </span>
+                  <span className="font-montserrat font-semibold text-sm capitalize">
+                    {pokemon.abilities[0].ability.name}
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col gap-1">
-                <span className="font-inter font-normal text-[#7A7D80] text-sm">
-                  Weight
-                </span>
-                <span className="font-montserrat font-semibold text-sm">
-                  {pokemon.weight}kg
-                </span>
+              <div className=" flex flex-col gap-4 ">
+                <h3 className="text font-inter font-semibold text-sm text-[#4D5053]">
+                  Weakness
+                </h3>
+                <div className="flex flex-row gap-2 flex-wrap">
+                  {pokemon.weaknesses.map((weaknesses, i) => (
+                    <BadgeType
+                      key={weaknesses}
+                      slot={i}
+                      type={{
+                        name: weaknesses,
+                        url: '',
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-col gap-1">
-                <span className="font-inter font-normal text-[#7A7D80]">
-                  Abilities
-                </span>
-                <span className="font-montserrat font-semibold text-sm capitalize">
-                  {pokemon.abilities[0].ability.name}
-                </span>
-              </div>
+              <Stats stats={pokemon.stats} />
             </div>
-            <div className=" flex flex-col gap-4 ">
-              <h3 className="text font-inter font-semibold text-sm text-[#4D5053]">
-                Weakness
-              </h3>
-              <div className="flex flex-row gap-2 flex-wrap">
-                {pokemon.weaknesses.map((weaknesses, i) => (
-                  <BadgeType
-                    key={weaknesses}
-                    slot={i}
-                    type={{
-                      name: weaknesses,
-                      url: '',
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-            <Stats stats={pokemon.stats} />
           </div>
         </div>
       </DialogContent>
