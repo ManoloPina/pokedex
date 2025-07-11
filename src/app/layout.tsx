@@ -94,7 +94,7 @@ export default function RootLayout({
                 </div>
 
                 <Image
-                  className="md:absolute -bottom-[120px] h-auto w-fit
+                  className="md:absolute md:flex -bottom-[120px] h-auto w-fit
                     md:-bottom-[248px] hidden"
                   src="/red-pokeball.png"
                   alt="Red Pokeball"
