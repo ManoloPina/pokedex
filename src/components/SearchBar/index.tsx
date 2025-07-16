@@ -31,15 +31,22 @@ export default function SearchBar({ className = '' }: Readonly<IProps>) {
   return (
     <div
       className={twMerge(
-        'h-[300px] bg-gradient-to-tr from-[#eff3f6]/100 to-[#eff3f6]/10 flex flex-col md:flex-row items-center',
-        className
+        `h-[300px] bg-gradient-to-tr from-[#eff3f6]/100 to-[#eff3f6]/10 flex
+        flex-col md:flex-row items-center justify-center md:justify-between p-6`,
+        className,
       )}
     >
-      <div className="max-w-7xl mx-auto w-full flex flex-col md:flex-row items-center justify-between">
-        <p className="font-bold text-primary text-3xl max-w-[260px]">
-          Selecione o seu Pokémon
+      <div
+        className="max-w-7xl mx-auto w-full flex flex-col md:flex-row
+          items-center justify-center md:justify-between gap-y-10"
+      >
+        <p
+          className="font-bold text-2xl text-center md:text-left md:text-3xl
+            w-full md:max-w-[260px] font-montserrat text-[#2F3133]"
+        >
+          Select your Pokémon
         </p>
-        <div className="w-1/3">
+        <div className="w-full md:w-1/3">
           <Input
             value={searchText}
             placeholder="Pesquise pelo nome ou código"
@@ -47,10 +54,12 @@ export default function SearchBar({ className = '' }: Readonly<IProps>) {
             onKeyDown={(e) => {
               if (e.key === 'Enter') handleSearchClick();
             }}
-            className="z-10 rounded-full text-sm placeholder:text-[#A0AFBA]  shadow-none bg-white w-full !px-6 !py-4 h-[56px]"
+            className="z-10 rounded-full text-sm placeholder:text-[#A0AFBA]
+              shadow-none bg-white w-full !px-6 !py-4 h-[56px]"
             endAdornment={
               <Button
-                className="rounded-full bg-[#9EB9E1] hover:bg-[#9EB9E1]/90 size-[42px] cursor-pointer"
+                className="rounded-full bg-[#9EB9E1] hover:bg-[#9EB9E1]/90
+                  size-[42px] cursor-pointer"
                 onClick={handleSearchClick}
               >
                 <Search className="text-[#3E75C3] font-bold" size={16} />
