@@ -46,8 +46,8 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
       <DialogContent
-        className="max-w-[680px] w-full md:min-w-[680px] rounded-2xl
-          border-none"
+        className="h-screen max-h-[85vh] w-full max-w-xs rounded-2xl border-none
+          bg-transparent p-0 outline-none md:max-h-[552px] md:max-w-[680px]"
         showCloseButton={false}
       >
         <DialogClose
@@ -58,10 +58,14 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
         >
           <X size={18} className="text-[#4D5053]" />
         </DialogClose>
-        <div className="h-full overflow-hidden rounded-2xl">
+        <div
+          className="relative max-h-full overflow-hidden rounded-2xl bg-white
+            p-4"
+        >
           <div
-            className="absolute top-0 md:bottom-0 left-0 z-0 md:h-full w-full
-              max-w-[191px] bg-cover bg-left bg-no-repeat h-[44px]"
+            className="] absolute top-0 left-0 z-0 h-[125px] w-full border-none
+              bg-size-[100%_auto] bg-center bg-no-repeat md:bottom-0 md:h-full
+              md:max-w-[191px] md:bg-cover md:bg-left"
             style={{
               backgroundImage: `url('/dialog-details-bg/${pokemon.types[0].type.name}-bg.png')`,
             }}
@@ -69,13 +73,16 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
           <VisuallyHidden>
             <DialogTitle>{pokemon.name}</DialogTitle>
           </VisuallyHidden>
-          <div className="grid grid-cols-1 md:grid-cols-[248px_1fr] gap-4">
+          <div
+            className="grid h-full grid-cols-1 gap-4 md:grid-cols-[248px_1fr]"
+          >
             <div
               className="relative flex flex-col items-center justify-evenly
                 gap-8"
             >
               <div className="w-fit gap-2 rounded-full bg-white">{icon}</div>
               <Image
+                className="h-auto max-w-[148px] md:max-w-[232px]"
                 alt={pokemon.name}
                 src={
                   pokemon.sprites.other.dream_world.front_default ??
@@ -85,7 +92,9 @@ const PokemonDetails: React.FC<Props> = ({ children, pokemon }) => {
                 height={232}
               />
             </div>
-            <div className="flex flex-col gap-8">
+            <div
+              className="flex flex-col gap-8 overflow-y-scroll md:overflow-clip"
+            >
               <div className="flex flex-col gap-1">
                 <h2 className="font-montserrat text-2xl font-bold capitalize">
                   {pokemon.name}{' '}
