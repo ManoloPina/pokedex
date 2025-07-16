@@ -83,6 +83,7 @@ export interface ISprites {
   front_female: string | null;
   front_shiny: string | null;
   front_shiny_female: string | null;
+
   other: {
     dream_world: {
       front_female: string | null;
@@ -90,6 +91,10 @@ export interface ISprites {
     };
     home: {
       front_shiny_female: string | null;
+    };
+    'official-artwork': {
+      front_default: string;
+      front_shiny: string;
     };
   };
   versions: Record<string, unknown>; // Defina conforme necessário
@@ -114,3 +119,16 @@ export interface ITypeSlot {
 
 // Adicione a interface IType se necessário, pois estava referenciada mas não definida
 export type IType = object;
+
+export type PokemonSummary = Pick<
+  IPokemon,
+  | 'id'
+  | 'name'
+  | 'sprites'
+  | 'types'
+  | 'abilities'
+  | 'height'
+  | 'weight'
+  | 'base_experience'
+  | 'stats'
+> & { weaknesses: string[] };
